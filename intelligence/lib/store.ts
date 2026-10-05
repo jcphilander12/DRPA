@@ -1,0 +1,5 @@
+import { env } from "cloudflare:workers";
+import { seedRows, type TenantId } from "./metrics";
+export function database():D1Database {if(!env.DB)throw new Error("The data store is temporarily unavailable.");return env.DB;}
+export async function seed(tenant:TenantId){const db=database();const rows=seedRows(tenant);const found=await db.prepare("SELECT count(*) AS total FROM observations WHERE tenant = ?").bind(tenant).first<{total:number}>();if((found?.total||0)>=rows.length)return;for(let i=0;i<rows.length;i+=80){await db.batch(rows.slice(i,i+80).map(r=>db.prepare("INSERT OR IGNORE INTO observations (id,tenant,site,period,metric,numerator,denominator,status,source,note,actor,updated,version) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)").bind(r.id,r.tenant,r.site,r.period,r.metric,r.numerator,r.denominator,r.status,r.source,r.note,r.actor,r.updated,r.version)));}}
+export function auditStatement(tenant:string,actor:string,action:string,entity:string,detail:string){return database().prepare("INSERT INTO audit_events (id,tenant,actor,action,entity,detail,created) VALUES (?,?,?,?,?,?,?)").bind(crypto.randomUUID(),tenant,actor,action,entity,detail,new Date().toISOString());}

@@ -1,0 +1,12 @@
+{
+  "updated": "2026-10-02",
+  "commits": {
+    "bid-workbench": "6995af3de60a34b668ddf01bd02dfcf36369a84c",
+    "intelligence": "c91ee27249920ed29b73926023c3b1eb3c893f25"
+  },
+  "workbench_version": 5,
+  "intelligence_version": 3,
+  "source_config_sanitized": true,
+  "runtime_secrets_included": false,
+  "browser_tested": false
+}

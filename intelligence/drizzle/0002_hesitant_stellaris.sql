@@ -1,0 +1,1 @@
+ALTER TABLE `evidence_documents` ADD `site` text DEFAULT 'company' NOT NULL;

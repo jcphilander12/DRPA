@@ -1,0 +1,19 @@
+{
+  // Copy to deployment/wrangler.jsonc and replace all deployment placeholders.
+  "name": "drpa-bid-workbench",
+  "main": "../dist/server/index.js",
+  "no_bundle": true,
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "rules": [{"type": "ESModule", "globs": ["**/*.js", "**/*.mjs"]}],
+  "assets": {"directory": "../dist/client", "binding": "ASSETS"},
+  "d1_databases": [{"binding": "DB", "database_name": "drpa-bid-workbench", "database_id": "REPLACE_WITH_D1_DATABASE_UUID", "migrations_dir": "../drizzle"}],
+  "r2_buckets": [{"binding": "BUCKET", "bucket_name": "REPLACE_WITH_PRIVATE_R2_BUCKET"}],
+  "vars": {
+    "AUTH_MODE": "cloudflare-access",
+    "MASTER_EMAIL": "REPLACE_WITH_MASTER_SIGNIN_EMAIL",
+    "ACCESS_TEAM_DOMAIN": "https://REPLACE_WITH_TEAM.cloudflareaccess.com",
+    "ACCESS_AUD": "REPLACE_WITH_ACCESS_APPLICATION_AUDIENCE",
+    "OPENAI_MODEL": "gpt-6-astra"
+  }
+}
